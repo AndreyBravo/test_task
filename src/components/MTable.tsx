@@ -40,6 +40,7 @@ const MTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [orderToRemove, setOrderToRemove] = useState<string | null>(null);
+  const [editingOrder, setEditingOrder] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,13 +56,15 @@ const MTable: React.FC = () => {
   }, []);
 
   const toggleCell = (order: string, process: string) => {
-    setCells(prevCells => ({
-      ...prevCells,
-      [order]: {
-        ...prevCells[order],
-        [process]: !prevCells[order][process]
-      }
-    }));
+    if (editingOrder === order) {
+      setCells(prevCells => ({
+        ...prevCells,
+        [order]: {
+          ...prevCells[order],
+          [process]: !prevCells[order][process]
+        }
+      }));
+    }
   };
 
   const addOrder = () => {
@@ -86,7 +89,7 @@ const MTable: React.FC = () => {
 //   };
 
   const editOrder = (order: string) => {
-    // Implement edit logic here
+    setEditingOrder(editingOrder === order ? null : order);
   };
 
   const confirmRemoveOrder = (order: string) => {
@@ -134,14 +137,13 @@ const MTable: React.FC = () => {
                     ></td>
                   ))}
                   <td>
-                    <button onClick={() => editOrder(order)}>Edit</button>
+                    <button onClick={() => editOrder(order)}>{editingOrder === order ? 'Save' : 'Edit'}</button>
                     <button onClick={() => confirmRemoveOrder(order)}>Delete</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          
         </>
       )}
 
