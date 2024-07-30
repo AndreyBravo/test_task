@@ -1,14 +1,13 @@
-import { useState } from 'react'
-import './App.css'
-import MTable from './components/MTable'
+import React from 'react';
+import './App.css';
+import MTable from './components/MTable';
 
-function App() {
-
+const App: React.FC = () => {
   return (
-    <>
-      <MTable/>
-    </>
-  )
+    <div className="App">
+      <MTable />
+    </div>
+  );
 }
 
-export default App
+export default App;
